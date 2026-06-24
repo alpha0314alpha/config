@@ -1,7 +1,6 @@
 vim.notify("INIT.LUA LOADED", vim.log.levels.INFO)
 
--- 基本設定
-vim.opt.number = true
+-- 蝓ｺ譛ｬ險ｭ螳・vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.mouse = "a"
 vim.opt.encoding = "utf-8"
@@ -23,9 +22,9 @@ vim.opt.backspace = { "indent", "eol", "start" }
 vim.g.mapleader = " "
 -- vim.o.guifont = "JetBrainsMono Nerd Font:h14"
 vim.g.neovide_scale_factor = 0.75
+vim.opt.clipboard = "unnamedplus"
 
--- キーマップ
-vim.keymap.set("n", "<leader>w", ":w<CR>")
+-- 繧ｭ繝ｼ繝槭ャ繝・vim.keymap.set("n", "<leader>w", ":w<CR>")
 vim.keymap.set("n", "<leader>q", ":q<CR>")
 vim.keymap.set("n", "<leader>d", "di{")
 vim.keymap.set("n", "<leader>s", "ci{")
@@ -34,15 +33,16 @@ vim.keymap.set("n", "<S-Tab>", "<<")
 vim.keymap.set("i", "<S-Tab>", "<C-d>")
 vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
 vim.keymap.set("n", "<C-p>", "<cmd>Telescope find_files<CR>")
-vim.keymap.set("n", "<C-c>", 'ggVG"*yG')
+vim.keymap.set("n", "<C-c>", 'ggVGyG')
 vim.keymap.set("n", "<C-s>", ':w<Enter>')
 vim.keymap.set("n", "<leader>cs", ":colorscheme", { noremap=true })
+vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreview<CR>")
 
--- マウスホイール完全無効
-vim.keymap.set({ "n", "i", "v" }, "<ScrollWheelUp>", "<Nop>")
-vim.keymap.set({ "n", "i", "v" }, "<ScrollWheelDown>", "<Nop>")
-vim.keymap.set({ "n", "i", "v" }, "<ScrollWheelLeft>", "<Nop>")
-vim.keymap.set({ "n", "i", "v" }, "<ScrollWheelRight>", "<Nop>")
+-- 繝槭え繧ｹ繝帙う繝ｼ繝ｫ螳悟・辟｡蜉ｹ
+-- vim.keymap.set({ "n", "i", "v" }, "<ScrollWheelUp>", "<Nop>")
+-- vim.keymap.set({ "n", "i", "v" }, "<ScrollWheelDown>", "<Nop>")
+-- vim.keymap.set({ "n", "i", "v" }, "<ScrollWheelLeft>", "<Nop>")
+-- vim.keymap.set({ "n", "i", "v" }, "<ScrollWheelRight>", "<Nop>")
 
 -- lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -59,7 +59,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     rocks = { enabled = false },
 
-    -- カラースキーム
+    -- 繧ｫ繝ｩ繝ｼ繧ｹ繧ｭ繝ｼ繝
     { "folke/tokyonight.nvim", lazy = false, priority = 1000, },
     { "catppuccin/nvim", name = "catppuccin", lazy = false, priority = 1000, },
     { "rebelot/kanagawa.nvim", lazy = false, priority = 1000, },
@@ -89,7 +89,7 @@ require("lazy").setup({
     { "lunarvim/darkplus.nvim", lazy = false, priority = 1000 },
     { "loctvl842/monokai-pro.nvim", lazy = false, priority = 1000 },
     { "wadackel/vim-dogrun", lazy = false, priority = 1000 },
-    { "masisz/ashikaga.nvim", lazy = false, priority = 1000 },
+    -- { "masisz/ashikaga.nvim", lazy = false, priority = 1000 },
     { "rafamadriz/neon", lazy = false, priority = 1000 },
     { "frenzyexists/aquarium-vim", lazy = false, priority = 1000 },
     { "cocopon/iceberg.vim", lazy = false, priority = 1000 },
@@ -115,7 +115,7 @@ require("lazy").setup({
     { "scottmckendry/cyberdream.nvim", lazy=false, priority=1000 },
     { "kvrohit/mellow.nvim", lazy=false, priority=1000 },
 
-    -- ui / 編集補助
+    -- ui / 邱ｨ髮・｣懷勧
     { "nvim-tree/nvim-tree.lua" },
     { "nvim-lualine/lualine.nvim" },
     { "hiphish/rainbow-delimiters.nvim" },
@@ -156,15 +156,15 @@ require("lazy").setup({
         config = function()
             local wk = require("which-key")
             wk.register({
-                ["<leader>f"] = { name = "file" },
-                ["<leader>ff"] = { "<cmd>Telescope find_files<cr>", desc = "find file" },
-                ["<leader>fr"] = { "<cmd>Telescope oldfiles<cr>", desc = "recent files" },
+                -- ["<leader>f"] = { name = "file" },
+                -- ["<leader>ff"] = { "<cmd>Telescope find_files<cr>", desc = "find file" },
+                -- ["<leader>fr"] = { "<cmd>Telescope oldfiles<cr>", desc = "recent files" },
 
-                ["<leader>g"] = { name = "git" },
+                -- ["<leader>g"] = { name = "git" },
                 ["<leader>gb"] = { "<cmd>Gitsigns blame_line<cr>", desc = "blame line" },
-                ["<leader>gs"] = { "<cmd>Git<cr>", desc = "status" },
+                -- ["<leader>gs"] = { "<cmd>Git<cr>", desc = "status" },
 
-                ["<leader>s"] = { name = "search" },
+                -- ["<leader>s"] = { name = "search" },
                 ["<leader>sg"] = { "<cmd>Telescope live_grep<cr>", desc = "live grep" },
             })
         end
@@ -204,10 +204,45 @@ require("lazy").setup({
     -- js
     { "pangloss/vim-javascript" },
     { "maxmellon/vim-jsx-pretty" },
-    { "numtostr/comment.nvim", config = true },
+    {
+        "numtostr/comment.nvim",
+        event = "BufReadPre",
+        -- config=true
+    },
 
     -- coc.nvim
     -- { "neoclide/coc.nvim", branch = "release" },
+
+    -- markdown
+    -- {
+    --     "iamcco/markdown-preview.nvim",
+    --     cmd = {
+    --         "MarkdownPreview",
+    --         "MarkdownPreviewStop",
+    --         "MarkdownPreviewToggle",
+    --     },
+    --     ft = { "markdown" },
+    --     build = function()
+    --         vim.fn["mkdp#util#install"]()
+    --     end,
+    -- }
+
+    {
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+    },
+
+    -- {
+    --     "OXY2DEV/markview.nvim",
+    --     ft = "markdown",
+    -- }
+
+    -- markdown
+    {
+        "iamcco/markdown-preview.nvim",
+        build = "cd app && npm install",
+        ft = { "markdown" },
+    }
 })
 
 -- autocmd
@@ -225,8 +260,7 @@ require("telescope").setup({})
 -- nvim-tree
 require("nvim-tree").setup({})
 
--- hop キーマップ
-local hop = require("hop")
+-- hop 繧ｭ繝ｼ繝槭ャ繝・local hop = require("hop")
 local directions = require("hop.hint").HintDirection
 
 vim.keymap.set("n", "<leader>f", function()
@@ -237,7 +271,7 @@ vim.keymap.set("n", "<leader>F", function()
 hop.hint_char1({ direction = directions.BEFORE_CURSOR })
 end, { remap = true })
 
--- スニペット
+-- 繧ｹ繝九・繝・ヨ
 local ls = require("luasnip")
 local cmp = require("cmp")
 
@@ -286,46 +320,46 @@ ls.add_snippets("cpp", {
     }),
 })
 
-ls.add_snippets("cpp", {
-    -- vector<T> A;
-    s("vec", {
-        t("vector<"),
-        i(1, "int"),
-        t("> "),
-        i(2, "A"),
-        t(";"),
-        i(0),
-    }),
-})  
+-- ls.add_snippets("cpp", {
+--     -- vector<T> A;
+--     s("vec", {
+--         t("vector<"),
+--         i(1, "int"),
+--         t("> "),
+--         i(2, "A"),
+--         t(";"),
+--         i(0),
+--     }),
+-- })  
+--
+-- ls.add_snippets("cpp", {
+--     -- vector<T> A(N);
+--     s("vecn", {
+--         t("vector<"),
+--         i(1, "int"),
+--         t("> "),
+--         i(2, "V"),
+--         t("("),
+--         i(3, "N"),
+--         t(");"),
+--         i(0),
+--     }),
+-- })
+--
+-- ls.add_snippets("cpp", {
+--     -- data<T> A;
+--     s("data", {
+--         i(1, "vector"),
+--         t("<"),
+--         i(2, "T"),
+--         t("> "),
+--         i(3, "A"),
+--         t(";"),
+--         i(0),
+--     })
+-- })
 
-ls.add_snippets("cpp", {
-    -- vector<T> A(N);
-    s("vecn", {
-        t("vector<"),
-        i(1, "int"),
-        t("> "),
-        i(2, "V"),
-        t("("),
-        i(3, "N"),
-        t(");"),
-        i(0),
-    }),
-})
-
-ls.add_snippets("cpp", {
-    -- data<T> A;
-    s("data", {
-        i(1, "vector"),
-        t("<"),
-        i(2, "T"),
-        t("> "),
-        i(3, "A"),
-        t(";"),
-        i(0),
-    })
-})
-
--- カラースキームルーレット
+-- 繧ｫ繝ｩ繝ｼ繧ｹ繧ｭ繝ｼ繝繝ｫ繝ｼ繝ｬ繝・ヨ
 local M = {}
 math.randomseed(os.time())
 local last = nil
@@ -361,9 +395,9 @@ function M.spin(filter)
     -- apply safely
     local ok = pcall(vim.cmd.colorscheme, pick)
     if ok then
-        vim.notify("🎰 OK " .. pick)
+        vim.notify("鴫 OK " .. pick)
     else
-        vim.notify("💥 failed: " .. pick, vim.log.levels.WARN)
+        vim.notify("徴 failed: " .. pick, vim.log.levels.WARN)
     end
 end
 
@@ -373,5 +407,6 @@ end, {
     nargs = "?"
 })
 
-vim.cmd.colorscheme("github_dark_dimmed")
+vim.cmd.colorscheme("dracula")
 return M
+
