@@ -3,6 +3,7 @@ vim.notify("INIT.LUA LOADED", vim.log.levels.INFO)
 -- 蝓ｺ譛ｬ險ｭ螳・vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.mouse = "a"
+vim.opt.swapfile = false
 vim.opt.encoding = "utf-8"
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
@@ -33,7 +34,7 @@ vim.keymap.set("n", "<S-Tab>", "<<")
 vim.keymap.set("i", "<S-Tab>", "<C-d>")
 vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
 vim.keymap.set("n", "<C-p>", "<cmd>Telescope find_files<CR>")
-vim.keymap.set("n", "<C-c>", 'ggVGyG')
+vim.keymap.set("n", "<C-c>", 'ggVGygg')
 vim.keymap.set("n", "<C-s>", ':w<Enter>')
 vim.keymap.set("n", "<leader>cs", ":colorscheme", { noremap=true })
 vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreview<CR>")
@@ -114,6 +115,25 @@ require("lazy").setup({
     { "ramojus/mellifluous.nvim", lazy=false, priority=1000 },
     { "scottmckendry/cyberdream.nvim", lazy=false, priority=1000 },
     { "kvrohit/mellow.nvim", lazy=false, priority=1000 },
+
+    -- 繧ｫ繝ｩ繝ｼ繧ｹ繧ｭ繝ｼ繝閭梧勹騾城℃
+    {
+        "xiyaowong/transparent.nvim",
+        lazy = false,
+        priority = 1000,
+        config = function()
+            require("transparent").setup({
+                extra_groups = {
+                "NormalFloat",
+                "FloatBorder",
+                "TelescopeNormal",
+                "TelescopeBorder",
+                },
+            })
+            require("transparent").clear_prefix("BufferLine")
+            vim.cmd("TransparentEnable")
+        end,
+    },
 
     -- ui / 邱ｨ髮・｣懷勧
     { "nvim-tree/nvim-tree.lua" },
@@ -250,6 +270,13 @@ vim.api.nvim_create_autocmd("FileType", {
     pattern = { "javascript", "jsx", "typescript", "tsx" },
     callback = function()
         vim.opt_local.expandtab = true
+    end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.md",
+    callback = function()
+        vim.cmd([[%s/\S\zs$/  /e]])
     end,
 })
 
