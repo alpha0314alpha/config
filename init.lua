@@ -1,6 +1,7 @@
 vim.notify("INIT.LUA LOADED", vim.log.levels.INFO)
 
--- 蝓ｺ譛ｬ險ｭ螳・vim.opt.number = true
+-- 基本設定
+vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.mouse = "a"
 vim.opt.swapfile = false
@@ -15,17 +16,20 @@ vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.scrolloff = 5
 vim.opt.updatetime = 300
+vim.opt.keywordprg = "man"
 vim.opt.signcolumn = "yes"
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
-vim.opt.formatoptions:remove({ "c", "r", "o" })
+vim.opt.formatoptions:remove({})
 vim.opt.backspace = { "indent", "eol", "start" }
 vim.g.mapleader = " "
 -- vim.o.guifont = "JetBrainsMono Nerd Font:h14"
 vim.g.neovide_scale_factor = 0.75
 vim.opt.clipboard = "unnamedplus"
 
--- 繧ｭ繝ｼ繝槭ャ繝・vim.keymap.set("n", "<leader>w", ":w<CR>")
+-- キーマップ
+vim.keymap.set("n", "K", "<Nop>", { silent = true })
+vim.keymap.set("n", "<leader>w", ":w<CR>")
 vim.keymap.set("n", "<leader>q", ":q<CR>")
 vim.keymap.set("n", "<leader>d", "di{")
 vim.keymap.set("n", "<leader>s", "ci{")
@@ -39,7 +43,7 @@ vim.keymap.set("n", "<C-s>", ':w<Enter>')
 vim.keymap.set("n", "<leader>cs", ":colorscheme", { noremap=true })
 vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreview<CR>")
 
--- 繝槭え繧ｹ繝帙う繝ｼ繝ｫ螳悟・辟｡蜉ｹ
+-- マウスホイール完全無効
 -- vim.keymap.set({ "n", "i", "v" }, "<ScrollWheelUp>", "<Nop>")
 -- vim.keymap.set({ "n", "i", "v" }, "<ScrollWheelDown>", "<Nop>")
 -- vim.keymap.set({ "n", "i", "v" }, "<ScrollWheelLeft>", "<Nop>")
@@ -60,7 +64,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     rocks = { enabled = false },
 
-    -- 繧ｫ繝ｩ繝ｼ繧ｹ繧ｭ繝ｼ繝
+    -- カラースキーム
     { "folke/tokyonight.nvim", lazy = false, priority = 1000, },
     { "catppuccin/nvim", name = "catppuccin", lazy = false, priority = 1000, },
     { "rebelot/kanagawa.nvim", lazy = false, priority = 1000, },
@@ -116,7 +120,7 @@ require("lazy").setup({
     { "scottmckendry/cyberdream.nvim", lazy=false, priority=1000 },
     { "kvrohit/mellow.nvim", lazy=false, priority=1000 },
 
-    -- 繧ｫ繝ｩ繝ｼ繧ｹ繧ｭ繝ｼ繝閭梧勹騾城℃
+    -- カラースキーム背景透過
     {
         "xiyaowong/transparent.nvim",
         lazy = false,
@@ -135,7 +139,7 @@ require("lazy").setup({
         end,
     },
 
-    -- ui / 邱ｨ髮・｣懷勧
+    -- ui / 編集補助
     { "nvim-tree/nvim-tree.lua" },
     { "nvim-lualine/lualine.nvim" },
     { "hiphish/rainbow-delimiters.nvim" },
@@ -170,25 +174,25 @@ require("lazy").setup({
     },
 
     -- which-key.nvim
-    {
-        "folke/which-key.nvim",
-        event = "VimEnter",
-        config = function()
-            local wk = require("which-key")
-            wk.register({
-                -- ["<leader>f"] = { name = "file" },
-                -- ["<leader>ff"] = { "<cmd>Telescope find_files<cr>", desc = "find file" },
-                -- ["<leader>fr"] = { "<cmd>Telescope oldfiles<cr>", desc = "recent files" },
-
-                -- ["<leader>g"] = { name = "git" },
-                ["<leader>gb"] = { "<cmd>Gitsigns blame_line<cr>", desc = "blame line" },
-                -- ["<leader>gs"] = { "<cmd>Git<cr>", desc = "status" },
-
-                -- ["<leader>s"] = { name = "search" },
-                ["<leader>sg"] = { "<cmd>Telescope live_grep<cr>", desc = "live grep" },
-            })
-        end
-    },
+    -- {
+    --     "folke/which-key.nvim",
+    --     event = "VimEnter",
+    --     config = function()
+    --         local wk = require("which-key")
+    --         wk.register({
+    --             -- ["<leader>f"] = { name = "file" },
+    --             -- ["<leader>ff"] = { "<cmd>Telescope find_files<cr>", desc = "find file" },
+    --             -- ["<leader>fr"] = { "<cmd>Telescope oldfiles<cr>", desc = "recent files" },
+    --
+    --             -- ["<leader>g"] = { name = "git" },
+    --             ["<leader>gb"] = { "<cmd>Gitsigns blame_line<cr>", desc = "blame line" },
+    --             -- ["<leader>gs"] = { "<cmd>Git<cr>", desc = "status" },
+    --
+    --             -- ["<leader>s"] = { name = "search" },
+    --             ["<leader>sg"] = { "<cmd>Telescope live_grep<cr>", desc = "live grep" },
+    --         })
+    --     end
+    -- },
 
 	-- nvim-cmp
 	{ "hrsh7th/nvim-cmp", },
@@ -287,7 +291,8 @@ require("telescope").setup({})
 -- nvim-tree
 require("nvim-tree").setup({})
 
--- hop 繧ｭ繝ｼ繝槭ャ繝・local hop = require("hop")
+-- hop キーマップ
+local hop = require("hop")
 local directions = require("hop.hint").HintDirection
 
 vim.keymap.set("n", "<leader>f", function()
@@ -298,7 +303,7 @@ vim.keymap.set("n", "<leader>F", function()
 hop.hint_char1({ direction = directions.BEFORE_CURSOR })
 end, { remap = true })
 
--- 繧ｹ繝九・繝・ヨ
+-- スニペット
 local ls = require("luasnip")
 local cmp = require("cmp")
 
@@ -328,10 +333,9 @@ cmp.setup({
     },
 })
 
-local s  = ls.snippet
-local t  = ls.text_node
-local i  = ls.insert_node
-
+local s = ls.snippet
+local t = ls.text_node
+local i = ls.insert_node
 ls.add_snippets("cpp", {
     -- [](){};
     s("lld", {
@@ -347,84 +351,36 @@ ls.add_snippets("cpp", {
     }),
 })
 
--- ls.add_snippets("cpp", {
---     -- vector<T> A;
---     s("vec", {
---         t("vector<"),
---         i(1, "int"),
---         t("> "),
---         i(2, "A"),
---         t(";"),
---         i(0),
---     }),
--- })  
---
--- ls.add_snippets("cpp", {
---     -- vector<T> A(N);
---     s("vecn", {
---         t("vector<"),
---         i(1, "int"),
---         t("> "),
---         i(2, "V"),
---         t("("),
---         i(3, "N"),
---         t(");"),
---         i(0),
---     }),
--- })
---
--- ls.add_snippets("cpp", {
---     -- data<T> A;
---     s("data", {
---         i(1, "vector"),
---         t("<"),
---         i(2, "T"),
---         t("> "),
---         i(3, "A"),
---         t(";"),
---         i(0),
---     })
--- })
-
--- 繧ｫ繝ｩ繝ｼ繧ｹ繧ｭ繝ｼ繝繝ｫ繝ｼ繝ｬ繝・ヨ
+-- カラースキームルーレット
 local M = {}
 math.randomseed(os.time())
 local last = nil
-
 function M.spin(filter)
     local schemes = vim.fn.getcompletion("", "color")
     if #schemes == 0 then
         vim.notify("Not Found", vim.log.levels.WARN)
         return
     end
-
-    -- filter
     local pool = {}
     for _, s in ipairs(schemes) do
         if not filter or filter == "" or s:match(filter) then
             table.insert(pool, s)
         end
     end
-
     if #pool == 0 then
         vim.notify("No match", vim.log.levels.WARN)
         return
     end
-
-    -- avoid same theme twice
     local pick
     repeat
         pick = pool[math.random(#pool)]
     until pick ~= last or #pool == 1
-
     last = pick
-
-    -- apply safely
     local ok = pcall(vim.cmd.colorscheme, pick)
     if ok then
-        vim.notify("鴫 OK " .. pick)
+        vim.notify("🎰 OK " .. pick)
     else
-        vim.notify("徴 failed: " .. pick, vim.log.levels.WARN)
+        vim.notify("💥 failed: " .. pick, vim.log.levels.WARN)
     end
 end
 
