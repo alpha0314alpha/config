@@ -77,6 +77,7 @@ command! W w
 command! CS colorscheme
 command! RC RandomColor
 
+set noswapfile
 set mouse=a
 set clipboard=unnamedplus
 set expandtab
@@ -92,6 +93,9 @@ set tabstop=4
 set backspace=indent,eol,start
 set omnifunc=syntaxcomplete#Complete
 " set completeopt=menu,menuone,noselect
+
+set timeoutlen=200
+set ttimeoutlen=10
 
 if &term =~# 'xterm'
   let &t_SI = "\<Esc>[6 q"
