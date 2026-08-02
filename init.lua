@@ -1,7 +1,6 @@
 vim.notify("INIT.LUA LOADED", vim.log.levels.INFO)
 
--- 基本設定
-vim.opt.number = true
+-- 蝓ｺ譛ｬ險ｭ螳・vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.mouse = "a"
 vim.opt.swapfile = false
@@ -27,8 +26,7 @@ vim.g.mapleader = " "
 vim.g.neovide_scale_factor = 0.75
 vim.opt.clipboard = "unnamedplus"
 
--- キーマップ
-vim.keymap.set("n", "K", "<Nop>", { silent = true })
+-- 繧ｭ繝ｼ繝槭ャ繝・vim.keymap.set("n", "K", "<Nop>", { silent = true })
 vim.keymap.set("n", "<leader>w", ":w<CR>")
 vim.keymap.set("n", "<leader>q", ":q<CR>")
 vim.keymap.set("n", "<leader>d", "di{")
@@ -43,7 +41,7 @@ vim.keymap.set("n", "<C-s>", ':w<Enter>')
 vim.keymap.set("n", "<leader>cs", ":colorscheme", { noremap=true })
 vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreview<CR>")
 
--- マウスホイール完全無効
+-- 繝槭え繧ｹ繝帙う繝ｼ繝ｫ螳悟・辟｡蜉ｹ
 -- vim.keymap.set({ "n", "i", "v" }, "<ScrollWheelUp>", "<Nop>")
 -- vim.keymap.set({ "n", "i", "v" }, "<ScrollWheelDown>", "<Nop>")
 -- vim.keymap.set({ "n", "i", "v" }, "<ScrollWheelLeft>", "<Nop>")
@@ -64,7 +62,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     rocks = { enabled = false },
 
-    -- カラースキーム
+    -- 繧ｫ繝ｩ繝ｼ繧ｹ繧ｭ繝ｼ繝
     { "folke/tokyonight.nvim", lazy = false, priority = 1000, },
     { "catppuccin/nvim", name = "catppuccin", lazy = false, priority = 1000, },
     { "rebelot/kanagawa.nvim", lazy = false, priority = 1000, },
@@ -120,7 +118,7 @@ require("lazy").setup({
     { "scottmckendry/cyberdream.nvim", lazy=false, priority=1000 },
     { "kvrohit/mellow.nvim", lazy=false, priority=1000 },
 
-    -- カラースキーム背景透過
+    -- 繧ｫ繝ｩ繝ｼ繧ｹ繧ｭ繝ｼ繝閭梧勹騾城℃
     {
         "xiyaowong/transparent.nvim",
         lazy = false,
@@ -139,7 +137,7 @@ require("lazy").setup({
         end,
     },
 
-    -- ui / 編集補助
+    -- ui / 邱ｨ髮・｣懷勧
     { "nvim-tree/nvim-tree.lua" },
     { "nvim-lualine/lualine.nvim" },
     { "hiphish/rainbow-delimiters.nvim" },
@@ -291,8 +289,7 @@ require("telescope").setup({})
 -- nvim-tree
 require("nvim-tree").setup({})
 
--- hop キーマップ
-local hop = require("hop")
+-- hop 繧ｭ繝ｼ繝槭ャ繝・local hop = require("hop")
 local directions = require("hop.hint").HintDirection
 
 vim.keymap.set("n", "<leader>f", function()
@@ -303,7 +300,7 @@ vim.keymap.set("n", "<leader>F", function()
 hop.hint_char1({ direction = directions.BEFORE_CURSOR })
 end, { remap = true })
 
--- スニペット
+-- 繧ｹ繝九・繝・ヨ
 local ls = require("luasnip")
 local cmp = require("cmp")
 
@@ -351,7 +348,7 @@ ls.add_snippets("cpp", {
     }),
 })
 
--- カラースキームルーレット
+-- 繧ｫ繝ｩ繝ｼ繧ｹ繧ｭ繝ｼ繝繝ｫ繝ｼ繝ｬ繝・ヨ
 local M = {}
 math.randomseed(os.time())
 local last = nil
@@ -378,9 +375,9 @@ function M.spin(filter)
     last = pick
     local ok = pcall(vim.cmd.colorscheme, pick)
     if ok then
-        vim.notify("🎰 OK " .. pick)
+        vim.notify("鴫 OK " .. pick)
     else
-        vim.notify("💥 failed: " .. pick, vim.log.levels.WARN)
+        vim.notify("徴 failed: " .. pick, vim.log.levels.WARN)
     end
 end
 
@@ -390,6 +387,6 @@ end, {
     nargs = "?"
 })
 
-vim.cmd.colorscheme("dracula")
+vim.cmd.colorscheme("monokai")
 return M
 
