@@ -1,3 +1,5 @@
+" echom "VIMRC LOADED"
+
 call plug#begin('~/.vim/plugged')
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-commentary'
@@ -12,7 +14,8 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'projekt0n/github-nvim-theme'
 Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 Plug 'folke/tokyonight.nvim'
-" Plug 'rebelot/kanagawa.nvim'
+Plug 'rebelot/kanagawa.nvim'
+Plug 'tomasiser/vim-code-dark'
 Plug 'EdenEast/nightfox.nvim'
 Plug 'rose-pine/vim'
 Plug 'nyoom-engineering/oxocarbon.nvim'
@@ -39,7 +42,7 @@ augroup END
 let g:closetag_filenames = '*.html,*.jsx,*.tsx'
 let g:closetag_xhtml_filenames = '*.jsx,*.tsx'
 let g:closetag_filetypes = 'html,jsx,tsx'
-let g:indentLine_char = '笏・
+let g:indentLine_char = '│'
 let g:closetag_regions = {
     \ 'jsx': 'jsxRegion,jsxExpression',
     \ 'tsx': 'jsxRegion,jsxExpression',
@@ -51,9 +54,10 @@ nnoremap <Tab> >>
 inoremap <S-Tab> <C-d>
 nnoremap <C-p> :Files<CR>
 nnoremap <C-f> :Rg<CR>
-"nnoremap <C-c> ggVGy
-nnoremap <C-c> ggVGy:call system('clip.exe', @")<CR>
+nnoremap <C-c> ggVGy
+" nnoremap <C-c> :call system('clip.exe', @")<CR>
 nnoremap <C-s> :w<CR>
+inoremap <C-p> <C-o>:Files<CR>
 
 " colorscheme
 function! RandomColor() abort
@@ -109,6 +113,9 @@ set guicursor=n-v-c:block,i-ci-ve:ver5,r-cr:hor20,o:hor50
 
 " colorscheme
 function! Transparent()
+    if has('gui_running')
+        return
+    endif
     highlight Normal guibg=NONE ctermbg=NONE
     highlight NonText guibg=NONE ctermbg=NONE
     highlight LineNr guibg=NONE ctermbg=NONE
@@ -121,7 +128,7 @@ augroup TransparentBG
     autocmd ColorScheme * call Transparent()
 augroup END
 
-colorscheme molokai
+colorscheme codedark
 call Transparent()
 
 filetype plugin indent on
