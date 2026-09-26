@@ -40,6 +40,7 @@ vim.keymap.set("n", "<C-c>", 'ggVGygg')
 vim.keymap.set("n", "<C-s>", ':w<Enter>')
 vim.keymap.set("n", "<leader>cs", ":colorscheme", { noremap=true })
 vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreview<CR>")
+vim.keymap.set("n", "<leader>tt", "<cmd>TransparentToggle<CR>", { desc = "Toggle Transparency" })
 
 -- 繝槭え繧ｹ繝帙う繝ｼ繝ｫ螳悟・辟｡蜉ｹ
 -- vim.keymap.set({ "n", "i", "v" }, "<ScrollWheelUp>", "<Nop>")
@@ -77,7 +78,7 @@ require("lazy").setup({
     { "nlknguyen/papercolor-theme", lazy = false, priority = 1000 },
     { "drewtempelmeyer/palenight.vim", lazy = false, priority = 1000 },
     { "sainnhe/sonokai", lazy = false, priority = 1000 },
-    { "nyoom-engineering/oxocarbon.nvim", lazy = false, priority = 1000 },
+    -- { "nyoom-engineering/oxocarbon.nvim", lazy = false, priority = 1000 },
     { "mofiqul/vscode.nvim", lazy = false, priority = 1000 },
     { "marko-cerovac/material.nvim", lazy = false, priority = 1000 },
     { "oxfist/night-owl.nvim", lazy = false, priority = 1000 },
@@ -143,10 +144,10 @@ require("lazy").setup({
     { "hiphish/rainbow-delimiters.nvim" },
     { "tpope/vim-surround" },
     
-    {
-        "alvan/vim-closetag",
-        ft = { "html", "javascriptreact", "typescriptreact"},
-    },
+    -- {
+    --     "alvan/vim-closetag",
+    --     ft = { "html", "javascriptreact", "typescriptreact"},
+    -- },
 
     {
         "windwp/nvim-autopairs",
@@ -154,6 +155,20 @@ require("lazy").setup({
         config = function()
             require("nvim-autopairs").setup({})
         end,
+    },
+
+    {
+        "windwp/nvim-ts-autotag",
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+        },
+        opts = {
+            opts = {
+                enable_close = true,
+                enable_rename = true,
+                enable_close_on_slash = false,
+            },
+        },
     },
 
     {
@@ -251,6 +266,7 @@ require("lazy").setup({
 
     {
         "nvim-treesitter/nvim-treesitter",
+        lazy = false,
         build = ":TSUpdate",
     },
 
@@ -348,10 +364,29 @@ ls.add_snippets("cpp", {
     }),
 })
 
+vim.api.nvim_create_autocmd("ColorScheme", {
+    callback = function()
+        vim.schedule(function()
+            vim.api.nvim_set_hl(0, "Visual", {
+                bg = "none",
+                fg = "#ffffff",
+                underline = true,
+            })
+        end)
+    end,
+})
+
 -- 繧ｫ繝ｩ繝ｼ繧ｹ繧ｭ繝ｼ繝繝ｫ繝ｼ繝ｬ繝・ヨ
 local M = {}
 math.randomseed(os.time())
 local last = nil
+local function setup_visual()
+    vim.api.nvim_set_hl(0, "Visual", {
+        bg = "none",
+        fg = "#ffffff",
+        underline = true,
+    })
+end
 function M.spin(filter)
     local schemes = vim.fn.getcompletion("", "color")
     if #schemes == 0 then
@@ -375,18 +410,20 @@ function M.spin(filter)
     last = pick
     local ok = pcall(vim.cmd.colorscheme, pick)
     if ok then
-        vim.notify("鴫 OK " .. pick)
+        setup_visual()
+        vim.notify("OK " .. pick)
     else
-        vim.notify("徴 failed: " .. pick, vim.log.levels.WARN)
+        vim.notify("failed: " .. pick, vim.log.levels.WARN)
     end
 end
 
 vim.api.nvim_create_user_command("Roulette", function(opts)
     M.spin(opts.args)
 end, {
-    nargs = "?"
+    nargs = "?",
 })
 
 vim.cmd.colorscheme("monokai")
-return M
+setup_visual()
 
+return M
