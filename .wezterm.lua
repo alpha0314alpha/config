@@ -19,36 +19,6 @@ config.launch_menu = {
             "Ubuntu",
         },
     },
-    {
-        label = "MSYS2 MINGW64",
-        args = {
-            "C:\\msys64\\usr\\bin\\bash.exe",
-            "--login",
-            "-i",
-        },
-        set_environment_variables = {
-            MSYSTEM = "MINGW64",
-        },
-    },
-    {
-        label = "MSYS2 UCRT64",
-        args = {
-            "C:\\msys64\\usr\\bin\\bash.exe",
-            "--login",
-            "-i",
-        },
-        set_environment_variables = {
-            MSYSTEM = "UCRT64",
-        },
-    },
-    {
-        label = "Git bash",
-        args = {
-            "C:\\Program Files\\Git\\bin\\bash.exe",
-            "--login",
-            "-i",
-        },
-    },
 }
 -- 繝輔か繝ｳ繝・
 config.font = wezterm.font_with_fallback({
@@ -63,7 +33,7 @@ config.macos_window_background_blur = 10
 -- config.window_background_opacity = 0.8
 -- config.win32_system_backdrop = "Acrylic"
 config.window_decorations = "RESIZE"
-config.show_tabs_in_tab_bar = false
+config.show_tabs_in_tab_bar = true
 config.show_new_tab_button_in_tab_bar = false
 -- config.show_new_tab_button_in_tab_bar = false
 -- config.show_close_tab_button_in_tabs = false
@@ -73,7 +43,21 @@ config.show_new_tab_button_in_tab_bar = false
 config.background = {
     {
         source = {
-            File = "C:/Users/admin/Pictures/___kawayo.jpg"
+            -- 蟇昴※繧九Α繝ｪ繝励Ο縺溘■
+            -- File = "C:/Users/admin/Pictures/_konomi.png"
+            -- File = "C:/Users/admin/Pictures/_nono.png"
+            -- File = "C:/Users/admin/Pictures/_akubi.png"
+            -- File = "C:/Users/admin/Pictures/_koma.png"
+            -- File = "C:/Users/admin/Pictures/_raco.png"
+            -- File = "C:/Users/admin/Pictures/_nuhu.png"
+            -- File = "C:/Users/admin/Pictures/_tsukuri.png"
+            -- File = "C:/Users/admin/Pictures/_amayo.png"
+            -- 縺九ｏ縺・＞
+            -- File = "C:/Users/admin/Pictures/_kano.jpg"
+            -- File = "C:/Users/admin/Pictures/_are.png"
+            File = "C:/Users/admin/Pictures/_suyaa.png"
+            -- File = "C:/Users/admin/Pictures/_obenkyougannbarou.png"
+            -- File = "C:/Users/admin/Pictures/cry.jpg"
         },
         opacity = 1,
         width = "Cover",
